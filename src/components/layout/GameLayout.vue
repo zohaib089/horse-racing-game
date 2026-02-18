@@ -14,7 +14,10 @@
       <div class="center">
         <HorseTrack />
       </div>
-
+      <div class="right">
+        <RacePrograms />
+        <RaceResults />
+      </div>
 
     </div>
 
@@ -30,7 +33,8 @@ import HorseList from '@/components/horses/HorsesList.vue'
 import HorseTrack from '@/components/horses/HorsesTrack.vue'
 import { useRaceController } from '@/controllers/useRaceController'
 import { ref } from 'vue'
-
+import RacePrograms from '../results/RacePrograms.vue'
+import RaceResults from '../results/RaceResults.vue'
 const { startRace } = useRaceController()
 const showCountdown = ref(false)
 
