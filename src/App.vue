@@ -1,11 +1,24 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <GameView />
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+import GameView from '@/views/GameView.vue';
+</script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f1f5f9;
+}
+
+#app {
+  min-height: 100vh;
+}
+</style>
