@@ -1,21 +1,28 @@
 <template>
   <div v-if="show" class="countdown-overlay">
     <div class="countdown-content">
+      <div v-if="message" class="countdown-message">{{ message }}</div>
       <div v-if="count > 0" class="countdown-number">{{ count }}</div>
       <div v-else class="countdown-go">GO!</div>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+
 const props = defineProps<{
   show: boolean
+  message?: string
 }>()
+
 const emit = defineEmits<{
   complete: []
 }>()
+
 const count = ref(3)
 let interval: number | null = null
+
 watch(() => props.show, (newShow) => {
   if (newShow) {
     count.value = 3
@@ -33,6 +40,7 @@ watch(() => props.show, (newShow) => {
   }
 })
 </script>
+
 <style scoped>
 .countdown-overlay {
   position: fixed;
@@ -47,6 +55,7 @@ watch(() => props.show, (newShow) => {
   z-index: 1000;
   animation: fadeIn 0.3s ease;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -55,21 +64,33 @@ watch(() => props.show, (newShow) => {
     opacity: 1;
   }
 }
+
 .countdown-content {
   text-align: center;
 }
+
+.countdown-message {
+  font-size: 32px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .countdown-number {
   font-size: 120px;
   font-weight: bold;
   color: white;
   animation: pulse 1s ease;
 }
+
 .countdown-go {
   font-size: 80px;
   font-weight: bold;
   color: #10b981;
   animation: scaleUp 0.5s ease;
 }
+
 @keyframes pulse {
   0% {
     transform: scale(0.5);
@@ -83,6 +104,7 @@ watch(() => props.show, (newShow) => {
     opacity: 1;
   }
 }
+
 @keyframes scaleUp {
   0% {
     transform: scale(0);

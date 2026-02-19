@@ -2,7 +2,7 @@ import type { Horse } from "./Horse"
 import type { Round } from "./Round"
 
 
-export type RaceStatus = 'idle' | 'generated' | 'running' | 'finished'
+export type RaceStatus = 'idle' | 'generated' | 'running' | 'between_rounds' | 'finished'
 
 export interface RaceState {
    horses: Horse[]

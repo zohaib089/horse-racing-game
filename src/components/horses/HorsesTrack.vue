@@ -73,6 +73,8 @@ const animate = (timestamp: number) => {
     currentRound.value.horses.forEach((horse: { id: number }) => {
       const speed = horseSpeed.value[horse.id] || 1
       const maxDistance = trackWidth * ANIMATION_CONFIG.TRACK_COMPLETION_PERCENTAGE
+      
+      // Each horse moves at different speed based on their speed factor
       horseProgress.value[horse.id] = baseProgress * speed * maxDistance
       
       // Galloping bob effect
@@ -222,8 +224,8 @@ onUnmounted(() => {
 }
 
 .horse-circle {
-  width: 100%;
-  height: 100%;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: flex;
   align-items: center;

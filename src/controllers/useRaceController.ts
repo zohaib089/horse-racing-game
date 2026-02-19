@@ -80,7 +80,15 @@ export const useRaceController = () => {
                 standings: result
             })
             store.commit('race/advanceRound')
-            runNextRound()
+            if (currentRoundIndex.value < schedule.value.length) {
+                store.commit('race/setStatus', RACE_STATUS.BETWEEN_ROUNDS)
+                setTimeout(() => {
+                    store.commit('race/setStatus', RACE_STATUS.RUNNING)
+                    runNextRound()
+                }, 4000)
+            } else {
+                store.commit('race/setStatus', RACE_STATUS.FINISHED)
+            }
         }, RACE_CONFIG.RACE_DURATION_MS)
     }
 
@@ -102,4 +110,4 @@ export const useRaceController = () => {
         startRace,
         resetRace
     }
-} 
+}

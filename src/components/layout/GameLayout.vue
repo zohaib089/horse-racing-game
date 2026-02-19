@@ -14,14 +14,14 @@
       <div class="center">
         <HorseTrack />
       </div>
+
       <div class="right">
-        <RacePrograms />
+        <RaceProgram />
         <RaceResults />
       </div>
-
     </div>
 
-    <Countdown :show="showCountdown" @complete="onCountdownComplete" />
+    <Countdown :show="showCountdown" :message="countdownMessage" @complete="onCountdownComplete" />
   </div>
 </template>
 
@@ -31,21 +31,35 @@ import WinnersMarquee from '@/components/common/WinnersMarquee.vue'
 import RaceControls from '@/components/controls/RaceControls.vue'
 import HorseList from '@/components/horses/HorsesList.vue'
 import HorseTrack from '@/components/horses/HorsesTrack.vue'
+import RaceProgram from '@/components/results/RacePrograms.vue'
+import RaceResults from '@/components/results/RaceResults.vue'
 import { useRaceController } from '@/controllers/useRaceController'
-import { ref } from 'vue'
-import RacePrograms from '../results/RacePrograms.vue'
-import RaceResults from '../results/RaceResults.vue'
-const { startRace } = useRaceController()
+import { ref, watch } from 'vue'
+
+const { startRace, raceStatus, currentRoundIndex } = useRaceController()
 const showCountdown = ref(false)
+const countdownMessage = ref('')
 
 const handleStartRace = () => {
+  countdownMessage.value = 'Race Starting...'
   showCountdown.value = true
 }
 
 const onCountdownComplete = () => {
   showCountdown.value = false
-  startRace()
+  if (countdownMessage.value === 'Race Starting...') {
+    startRace()
+  } 
 }
+
+watch(raceStatus, (newStatus, oldStatus) => {
+  if (newStatus === 'between_rounds') {
+    countdownMessage.value = `Round ${currentRoundIndex.value + 1} Starting...`
+    showCountdown.value = true
+  } else if (oldStatus === 'between_rounds' && newStatus === 'running') {
+    showCountdown.value = false
+  }
+})
 </script>
 
 <style scoped>
