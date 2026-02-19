@@ -1,7 +1,7 @@
-import HorsesTrack from '@/components/horses/HorsesTrack.vue'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { createTestStore } from './helpers/testStore'
+import HorsesTrack from '@/components/horses/HorsesTrack.vue'
+import { createTestStore } from '../../helpers/testStore'
 
 vi.mock('vuex', async () => {
   const actual = await vi.importActual('vuex')

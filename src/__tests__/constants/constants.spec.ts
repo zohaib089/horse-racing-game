@@ -1,5 +1,5 @@
-import { ANIMATION_CONFIG, RACE_CONFIG, RACE_STATUS, ROUND_DISTANCES } from '@/constants/race.constants'
-import { describe, expect, it } from 'vitest'
+import { describe, it, expect } from 'vitest'
+import { RACE_CONFIG, ROUND_DISTANCES, RACE_STATUS, ANIMATION_CONFIG } from '@/constants/race.constants'
 
 describe('Race Constants', () => {
   describe('RACE_CONFIG', () => {

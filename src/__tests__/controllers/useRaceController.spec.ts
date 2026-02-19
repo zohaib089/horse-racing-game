@@ -1,7 +1,7 @@
-import { RACE_CONFIG } from '@/constants/race.constants'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useRaceController } from '@/controllers/useRaceController'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { createTestStore } from './helpers/testStore'
+import { RACE_CONFIG } from '@/constants/race.constants'
+import { createTestStore } from '../helpers/testStore'
 
 // Mock Vuex useStore
 vi.mock('vuex', async () => {

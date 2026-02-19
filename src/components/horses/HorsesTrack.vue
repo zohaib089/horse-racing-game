@@ -34,8 +34,13 @@
     <div v-if="raceStatus === 'running' || raceStatus === 'between_rounds'" class="race-info">
       <div class="round-info">
         <span v-if="raceStatus === 'running'">🏁 Racing Now:</span>
-        <span v-else>⏸️ Round Complete:</span>
-        Round {{ Number(currentRoundIndex) + 1 }} / {{ schedule.length }} - {{ currentRound?.distance }}m
+        <span v-else>✅ Round Complete:</span>
+        <span v-if="raceStatus === 'running'">
+          Round {{ Math.min(currentRoundIndex + 1, schedule.length) }} / {{ schedule.length }} - {{ currentRound?.distance || 0 }}m
+        </span>
+        <span v-else>
+          Round {{ Math.max(1, currentRoundIndex) }} / {{ schedule.length }} - {{ schedule[Math.max(0, currentRoundIndex - 1)]?.distance || 0 }}m
+        </span>
       </div>
     </div>
   </div>

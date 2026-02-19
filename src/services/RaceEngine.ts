@@ -20,7 +20,7 @@ export class RaceEngine {
         return horses
             .map(horse => ({
                 ...horse,
-                performance: horse.condition * Math.random() * distance
+                performance: horse.condition * (0.8 + Math.random() * 0.4) * distance
             }))
             .sort((a, b) => b.performance - a.performance)
     }
