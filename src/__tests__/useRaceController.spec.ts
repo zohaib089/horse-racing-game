@@ -1,9 +1,7 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { createStore } from 'vuex'
-import { useRaceController } from '@/controllers/useRaceController'
-import { raceModule } from '@/store/race/race.module'
 import { RACE_CONFIG } from '@/constants/race.constants'
-import type { RootState } from '@/store'
+import { useRaceController } from '@/controllers/useRaceController'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createTestStore } from './helpers/testStore'
 
 // Mock Vuex useStore
 vi.mock('vuex', async () => {
@@ -18,22 +16,7 @@ let store: any
 
 describe('useRaceController', () => {
   beforeEach(() => {
-    store = createStore<RootState>({
-      modules: {
-        race: {
-          namespaced: true,
-          state: () => ({
-            horses: [],
-            schedule: [],
-            results: {},
-            currentRoundIndex: 0,
-            raceStatus: 'idle'
-          }),
-          mutations: raceModule.mutations,
-          getters: raceModule.getters
-        }
-      }
-    })
+    store = createTestStore()
   })
 
   describe('Computed Properties', () => {
@@ -189,6 +172,32 @@ describe('useRaceController', () => {
       expect(horses.value).toEqual([])
       expect(schedule.value).toEqual([])
       expect(raceStatus.value).toBe('idle')
+    })
+  })
+
+  describe('Round Transitions', () => {
+    it('supports between_rounds status', () => {
+      store.commit('race/setStatus', 'between_rounds')
+      const { raceStatus } = useRaceController()
+      expect(raceStatus.value).toBe('between_rounds')
+    })
+
+    it('transitions from running to between_rounds', () => {
+      const { raceStatus } = useRaceController()
+      store.commit('race/setStatus', 'running')
+      expect(raceStatus.value).toBe('running')
+      
+      store.commit('race/setStatus', 'between_rounds')
+      expect(raceStatus.value).toBe('between_rounds')
+    })
+
+    it('transitions from between_rounds to running', () => {
+      const { raceStatus } = useRaceController()
+      store.commit('race/setStatus', 'between_rounds')
+      expect(raceStatus.value).toBe('between_rounds')
+      
+      store.commit('race/setStatus', 'running')
+      expect(raceStatus.value).toBe('running')
     })
   })
 })

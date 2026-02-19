@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
-import { RACE_CONFIG, ROUND_DISTANCES, RACE_STATUS, ANIMATION_CONFIG } from '@/constants/race.constants'
+import { ANIMATION_CONFIG, RACE_CONFIG, RACE_STATUS, ROUND_DISTANCES } from '@/constants/race.constants'
+import { describe, expect, it } from 'vitest'
 
 describe('Race Constants', () => {
   describe('RACE_CONFIG', () => {
@@ -47,7 +47,14 @@ describe('Race Constants', () => {
       expect(RACE_STATUS.IDLE).toBe('idle')
       expect(RACE_STATUS.GENERATED).toBe('generated')
       expect(RACE_STATUS.RUNNING).toBe('running')
+      expect(RACE_STATUS.BETWEEN_ROUNDS).toBe('between_rounds')
       expect(RACE_STATUS.FINISHED).toBe('finished')
+    })
+
+    it('has unique status values', () => {
+      const statuses = Object.values(RACE_STATUS)
+      const uniqueStatuses = new Set(statuses)
+      expect(uniqueStatuses.size).toBe(statuses.length)
     })
   })
 
